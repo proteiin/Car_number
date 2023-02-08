@@ -3,7 +3,6 @@
 
 
 #https://github.com/kairess/license_plate_recognition
-#pytesserect 파일의 환경변수 설정이 필요할 수 있음
 
 
 get_ipython().system('pip install opencv-python')
@@ -24,11 +23,8 @@ plt.style.use('dark_background')
 pytesseract.pytesseract.tesseract_cmd='C:/Program Files/Tesseract-OCR/tesseract.exe'
 
 
-# # Read Input Image
+# Read Input Image
 
-
-#이미지 파일(보배드림 차량 파일들의 경로를 써주기)
-#ex) C드라이브 안의 User 폴더의 bobae폴더 안에 img가 있는경우
 img_ori = cv2.imread('C:/Users/bobae/img_762431_1.jpg')
 
 height, width, channel = img_ori.shape
