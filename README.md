@@ -7,3 +7,5 @@ Second, Download kor.traindata and move it to Tesseract-OCR/tessdata
   
 
 reference: https://github.com/kairess/license_plate_recognition
+
+ipynb file is more convinient
