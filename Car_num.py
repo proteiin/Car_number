@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[67]:
-
 
 #https://github.com/kairess/license_plate_recognition
 #pytesserect 파일의 환경변수 설정이 필요할 수 있음
-
-
-# In[1]:
 
 
 get_ipython().system('pip install opencv-python')
@@ -16,8 +11,6 @@ get_ipython().system('pip install numpy')
 get_ipython().system('pip install matplotlib')
 get_ipython().system('pip install pytesseract')
 
-
-# In[2]:
 
 
 import cv2
@@ -28,22 +21,10 @@ from PIL import Image
 plt.style.use('dark_background')
 
 
-# In[3]:
-
-
-#pytesseract.pytesseract.tesseract_cmd = R'C:\Program Files\Tesseract-OCR\tesseract'
-#str= pytesseract.image_to_string(Image.open('c:/python/ocr/test_image.jpg'), lang='Hangul')
-
-
-# In[4]:
-
-
 pytesseract.pytesseract.tesseract_cmd='C:/Program Files/Tesseract-OCR/tesseract.exe'
 
 
 # # Read Input Image
-
-# In[5]:
 
 
 #이미지 파일(보배드림 차량 파일들의 경로를 써주기)
@@ -56,9 +37,8 @@ plt.figure(figsize=(12, 10))
 plt.imshow(img_ori, cmap='gray')
 
 
-# # Convert Image to Grayscale
 
-# In[6]:
+# Convert Image to Grayscale
 
 
 # hsv = cv2.cvtColor(img_ori, cv2.COLOR_BGR2HSV)
@@ -69,9 +49,7 @@ plt.figure(figsize=(12, 10))
 plt.imshow(gray, cmap='gray')
 
 
-# # Maximize Contrast (Optional)
-
-# In[7]:
+# Maximize Contrast (Optional)
 
 
 structuringElement = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
@@ -86,9 +64,7 @@ plt.figure(figsize=(12, 10))
 plt.imshow(gray, cmap='gray')
 
 
-# # Adaptive Thresholding
-
-# In[8]:
+# Adaptive Thresholding
 
 
 img_blurred = cv2.GaussianBlur(gray, ksize=(5, 5), sigmaX=0)
@@ -106,9 +82,7 @@ plt.figure(figsize=(6, 5))
 plt.imshow(img_thresh, cmap='gray')
 
 
-# # Find Contours_1
-
-# In[9]:
+# Find Contours_1
 
 
 contours, _ = cv2.findContours(
@@ -125,9 +99,7 @@ plt.figure(figsize=(6, 5))
 plt.imshow(temp_result)
 
 
-# # Prepare Data
-
-# In[10]:
+# Prepare Data
 
 
 temp_result = np.zeros((height, width, channel), dtype=np.uint8)
@@ -154,9 +126,6 @@ plt.imshow(temp_result, cmap='gray')
 
 
 # # Select Candidates by Char Size
-
-# In[11]:
-
 
 MIN_AREA = 80
 MIN_WIDTH, MIN_HEIGHT = 2, 8
@@ -185,9 +154,7 @@ plt.figure(figsize=(6, 5))
 plt.imshow(temp_result, cmap='gray')
 
 
-# # Select Candidates by Arrangement of Contours
-
-# In[12]:
+# Select Candidates by Arrangement of Contours
 
 
 MAX_DIAG_MULTIPLYER = 5 # 5
@@ -266,9 +233,7 @@ plt.figure(figsize=(12, 10))
 plt.imshow(temp_result, cmap='gray')
 
 
-# # Rotate Plate Images
-
-# In[13]:
+# Rotate Plate Images
 
 
 PLATE_WIDTH_PADDING = 1.3 # 1.3
@@ -325,10 +290,7 @@ for i, matched_chars in enumerate(matched_result):
     plt.subplot(len(matched_result), 1, i+1)
     plt.imshow(img_cropped, cmap='gray')
 
-
-# # Another Thresholding to Find Chars
-
-# In[14]:
+# Another Thresholding to Find Chars
 
 
 longest_idx, longest_text = -1, 'A'
@@ -391,9 +353,7 @@ for i, plate_img in enumerate(plate_imgs):
 print(longest_text, longest_idx)
 
 
-# # Result
-
-# In[15]:
+# Result
 
 
 info = plate_infos[longest_idx]
@@ -409,16 +369,4 @@ cv2.imwrite(chars + '.jpg', img_out)
 
 plt.figure(figsize=(12, 10))
 plt.imshow(img_out)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
